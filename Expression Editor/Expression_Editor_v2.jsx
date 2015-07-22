@@ -11,7 +11,7 @@ function expEditor(thisObj){
 				runBtn: Button { text:'run', preferredSize:[25,20]} \
 			}, \
 			gr_Editor: Group { \
-				editField : EditText {text:' 0', preferredSize:[100,200], alignment:['top','center']} \
+				editField : EditText {text:' 0', multiline:true, enterKeySignalsOnChange:false, preferredSize:[100,200], scrollable:true, alignChildren:['top','left']} \
 			} \
 		}";
 
