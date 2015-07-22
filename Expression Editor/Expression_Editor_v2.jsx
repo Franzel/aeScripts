@@ -9,7 +9,7 @@ function expEditor(thisObj){
 	var selectedProperties = project.item(selectedCompIndex).selectedProperties;
 
 	function bakeExpression(expression){
-		this.selectedProperty = selectedProperties;
+		this.selectedProperty = selectedProperties[0];
 		alert(this.selectedProperty.name);
 		this.selectedProperty.expression = expression;
 
@@ -51,7 +51,7 @@ function expEditor(thisObj){
 		//CALLBACKS
 		pal.grp.gr_Actions.runBtn.onClick = function(){
 			alert("hola");
-			bakeExpression(pal.grp.gr_Editor.text);
+			bakeExpression(pal.grp.gr_Editor.editField.text);
 
 		}
 
