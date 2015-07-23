@@ -57,7 +57,7 @@ function expEditor(thisObj){
 	this.buildUI = function(thisObj){
 
 		// alert(selectedProperties[0].expression);
-		var pal =  (thisObj instanceof Panel) ? thisObj: new Window("palette", "Expression Editor", undefined, {resizable:true} );
+		var pal =  (thisObj instanceof Panel) ? thisObj: new Window("palette", "Expression Editor", undefined, {resizable:true}  );
 
 		//resource specs
 		var res = 
@@ -67,8 +67,9 @@ function expEditor(thisObj){
 				clearBtn: Button { text:'Clear', preferredSize:[50,20]}, \
 				runBtn: Button { text:'Apply', preferredSize:[50,20]} \
 			}, \
-			gr_Editor: Group { \
-				editField : EditText {text:' ', properties: {multiline:true}, enterKeySignalsOnChange:true, preferredSize:[250,500], scrollable:true, alignChildren:['top','left']} \
+			gr_Editor: Group { orientation:'column', \
+				infoField : StaticText {text:'" +  getSelectedProperty().name + "', alignment:['left','top']}, \
+				editField : EditText {text:'', properties: {multiline:true}, enterKeySignalsOnChange:true, preferredSize:[300,500], scrollable:true, alignChildren:['top','left']} \
 			} \
 		}";
 
@@ -86,12 +87,15 @@ function expEditor(thisObj){
 		}
 
 		pal.grp.gr_Actions.getBtn.onClick = function(){
+			pal.grp.gr_Editor.infoField.text = getSelectedProperty().name;
 			pal.grp.gr_Editor.editField.text = getExpression();
 		}
 
 		pal.grp.gr_Actions.clearBtn.onClick = function(){
 			var selectedProperty = getSelectedProperty();
+			app.beginUndoGroup("Clear Expression");
 			selectedProperty.expression = "";
+			app.endUndoGroup();
 		}
 
 
