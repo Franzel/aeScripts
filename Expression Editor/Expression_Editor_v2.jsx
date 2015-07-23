@@ -4,9 +4,8 @@ function expEditor(thisObj){
 	 this.project = app.project;
 	 this.stringTest = "string test";
 
-
-	function bakeExpression(expression){
-		if(app.project.activeItem !== null){
+	 function getSelectedProperty(){
+	 	if(app.project.activeItem !== null){
 			this.selectedComp = project.activeItem;
 			this.selectedCompIndex = getIndexfromName(selectedComp.name);	
 			this.selectedLayers = project.item(selectedCompIndex).selectedLayers;
@@ -17,20 +16,29 @@ function expEditor(thisObj){
 		}
 
 		this.selectedProperty = selectedProperties[0];
-		// alert(this.selectedProperty.name);
-		this.selectedProperty.expression = expression;
+	 	return this.selectedProperty
+	 }
+
+
+	function bakeExpression(expression){
+		if(app.project.activeItem !== null){
+			var selectedProperty = getSelectedProperty();
+		}else{
+			alert("Please select a Layer Property first");
+		}
+
+		selectedProperty.expression = expression;
 	}
 
 	function getExpression(){
 		if(app.project.activeItem !== null){
-			this.selectedComp = project.activeItem;
-			this.selectedCompIndex = getIndexfromName(selectedComp.name);	
-			this.selectedLayers = project.item(selectedCompIndex).selectedLayers;
-			this.selectedProperties = project.item(selectedCompIndex).selectedProperties;
-			this.currentExpression = this.selectedProperties[0].expression;
-			// alert(this.selectedProperties[0].name);
-			return this.currentExpression;
-
+			var selectedProperty = getSelectedProperty();
+			
+			if(selectedProperty.expressionEnabled == false){
+				alert("The selected property contains no expression");
+			}else{
+				return selectedProperty.expression;
+			}
 		}else{
 			alert("Please select a Layer Property first");
 		}
@@ -48,7 +56,7 @@ function expEditor(thisObj){
 
 	this.buildUI = function(thisObj){
 
-		alert(selectedProperties[0].expression);
+		// alert(selectedProperties[0].expression);
 		var pal =  (thisObj instanceof Panel) ? thisObj: new Window("palette", "Expression Editor", undefined, {resizable:true} );
 
 		//resource specs
@@ -56,6 +64,7 @@ function expEditor(thisObj){
 		"group { orientation:'column', alignment:['left', 'top'], alignChildren:['right', 'top'], \
 			gr_Actions: Group { orientation:'row', \
 				getBtn: Button { text:'Get', preferredSize:[50,20]}, \
+				clearBtn: Button { text:'Clear', preferredSize:[50,20]}, \
 				runBtn: Button { text:'Apply', preferredSize:[50,20]} \
 			}, \
 			gr_Editor: Group { \
@@ -78,6 +87,11 @@ function expEditor(thisObj){
 
 		pal.grp.gr_Actions.getBtn.onClick = function(){
 			pal.grp.gr_Editor.editField.text = getExpression();
+		}
+
+		pal.grp.gr_Actions.clearBtn.onClick = function(){
+			var selectedProperty = getSelectedProperty();
+			selectedProperty.expression = "";
 		}
 
 
