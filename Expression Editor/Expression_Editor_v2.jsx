@@ -11,12 +11,12 @@ function expEditor(thisObj){
 			this.selectedLayers = project.item(selectedCompIndex).selectedLayers;
 			this.selectedProperties = project.item(selectedCompIndex).selectedProperties;
 			this.currentExpression = this.selectedProperties[0].expression;
+			this.selectedProperty = selectedProperties[0];
+	 		return this.selectedProperty
 		}else{
 			alert("Please select a Layer Property first");
+			return " ";
 		}
-
-		this.selectedProperty = selectedProperties[0];
-	 	return this.selectedProperty
 	 }
 
 
@@ -68,7 +68,7 @@ function expEditor(thisObj){
 				runBtn: Button { text:'Apply', preferredSize:[50,20]} \
 			}, \
 			gr_Editor: Group { orientation:'column', \
-				infoField : StaticText {text:'" +  getSelectedProperty().name + "', alignment:['left','top']}, \
+				infoField : StaticText {text:'', alignment:['left','top']}, \
 				editField : EditText {text:'', properties: {multiline:true}, enterKeySignalsOnChange:true, preferredSize:[300,500], scrollable:true, alignChildren:['top','left']} \
 			} \
 		}";
