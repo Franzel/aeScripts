@@ -2,26 +2,38 @@
 function expEditor(thisObj){
 
 	 this.project = app.project;
-
-
-	if(app.project.activeItem !== null){
-		this.selectedComp = project.activeItem;
-		this.selectedCompIndex = getIndexfromName(selectedComp.name);	
-		this.selectedLayers = project.item(selectedCompIndex).selectedLayers;
-		this.selectedProperties = project.item(selectedCompIndex).selectedProperties;
-		this.currentExpression = this.selectedProperties[0].expression;
-	}else{
-		alert("Please select a Layer Property first");
-	}
-
-	
+	 this.stringTest = "string test";
 
 
 	function bakeExpression(expression){
-		this.selectedProperty = selectedProperties[0];
-		alert(this.selectedProperty.name);
-		this.selectedProperty.expression = expression;
+		if(app.project.activeItem !== null){
+			this.selectedComp = project.activeItem;
+			this.selectedCompIndex = getIndexfromName(selectedComp.name);	
+			this.selectedLayers = project.item(selectedCompIndex).selectedLayers;
+			this.selectedProperties = project.item(selectedCompIndex).selectedProperties;
+			this.currentExpression = this.selectedProperties[0].expression;
+		}else{
+			alert("Please select a Layer Property first");
+		}
 
+		this.selectedProperty = selectedProperties[0];
+		// alert(this.selectedProperty.name);
+		this.selectedProperty.expression = expression;
+	}
+
+	function getExpression(){
+		if(app.project.activeItem !== null){
+			this.selectedComp = project.activeItem;
+			this.selectedCompIndex = getIndexfromName(selectedComp.name);	
+			this.selectedLayers = project.item(selectedCompIndex).selectedLayers;
+			this.selectedProperties = project.item(selectedCompIndex).selectedProperties;
+			this.currentExpression = this.selectedProperties[0].expression;
+			// alert(this.selectedProperties[0].name);
+			return this.currentExpression;
+
+		}else{
+			alert("Please select a Layer Property first");
+		}
 	}
 
 	function getIndexfromName(_name){
@@ -42,11 +54,12 @@ function expEditor(thisObj){
 		//resource specs
 		var res = 
 		"group { orientation:'column', alignment:['left', 'top'], alignChildren:['right', 'top'], \
-			gr_Actions: Group { \
+			gr_Actions: Group { orientation:'row', \
+				getBtn: Button { text:'Get', preferredSize:[50,20]}, \
 				runBtn: Button { text:'Apply', preferredSize:[50,20]} \
 			}, \
 			gr_Editor: Group { \
-				editField : EditText {text:'" + this.currentExpression.toString() + "', properties: {multiline:true}, enterKeySignalsOnChange:true, preferredSize:[250,500], scrollable:true, alignChildren:['top','left']} \
+				editField : EditText {text:' ', properties: {multiline:true}, enterKeySignalsOnChange:true, preferredSize:[250,500], scrollable:true, alignChildren:['top','left']} \
 			} \
 		}";
 
@@ -60,9 +73,11 @@ function expEditor(thisObj){
 
 		//CALLBACKS
 		pal.grp.gr_Actions.runBtn.onClick = function(){
-			alert("hola");
 			bakeExpression(pal.grp.gr_Editor.editField.text);
+		}
 
+		pal.grp.gr_Actions.getBtn.onClick = function(){
+			pal.grp.gr_Editor.editField.text = getExpression();
 		}
 
 
