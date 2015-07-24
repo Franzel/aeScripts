@@ -3,6 +3,11 @@ function expEditor(thisObj){
 
 	 this.project = app.project;
 
+	 this.compErr = "Please select a Layer Property first";
+	 this.layerErr = "Please select a Layer Property first";
+	 this.expErr = "The selected property contains no expression";
+
+
 	 this.checkActiveItem = function(){
 	 	return (this.project.activeItem instanceof CompItem);
 	 };
@@ -20,10 +25,10 @@ function expEditor(thisObj){
 			 	this.selectedPropertyName = selectedProperty.name;
 			 	return selectedProperty;
 			 }else{
-			 	return 0;
+			 	alert(layerErr);
 			 }
 		}else{
-			alert("No Comp is selected");
+			alert(compErr);
 			return null;
 		}
 	 };
@@ -32,7 +37,7 @@ function expEditor(thisObj){
 	 	var selectedProperty = getSelectedProperty();
 
 		if(selectedProperty.expressionEnabled == false){
-			alert("The selected property contains no expression");
+			alert(expErr);
 			return " ";
 		}else{
 			return selectedProperty.expression;
@@ -90,6 +95,7 @@ function expEditor(thisObj){
 
 		//CALLBACKS
 		pal.grp.gr_Actions.runBtn.onClick = function(){
+			pal.grp.gr_Editor.infoField.text = getSelectedProperty().name;
 			bakeExpression(pal.grp.gr_Editor.editField.text);
 		}
 
@@ -102,6 +108,8 @@ function expEditor(thisObj){
 			var selectedProperty = getSelectedProperty();
 			app.beginUndoGroup("Clear Expression");
 			selectedProperty.expression = "";
+			pal.grp.gr_Editor.infoField.text = getSelectedProperty().name;
+			pal.grp.gr_Editor.editField.text = "";
 			app.endUndoGroup();
 		}
 
