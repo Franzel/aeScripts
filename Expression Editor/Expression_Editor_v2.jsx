@@ -3,7 +3,7 @@ function expEditor(thisObj){
 
 	 this.project = app.project;
 
-	 this.compErr = "Please select a Layer Property first";
+	 this.compErr = "Please select a Composition first";
 	 this.layerErr = "Please select a Layer Property first";
 	 this.expErr = "The selected property contains no expression";
 
@@ -33,12 +33,30 @@ function expEditor(thisObj){
 		}
 	 };
 
+	 function getSelectedPropertyName(){
+	 	var selectedComp = project.activeItem;
+
+	 	if(this.checkActiveItem(selectedComp)){
+
+			this.mySelectedProperties = selectedComp.selectedProperties;
+
+			if(selectedComp.selectedProperties.length>0){
+				this.selectedProperty = mySelectedProperties[0];
+				this.selectedPropertyName = selectedProperty.name;
+				return selectedPropertyName;
+			}
+		}else{
+			return null;
+		}
+	 };
+
+
 	 function getExpression(){
 	 	var selectedProperty = getSelectedProperty();
 
-		if(selectedProperty.expressionEnabled == false){
-			alert(expErr);
+		if(selectedProperty==null || selectedProperty.expressionEnabled == false){
 			return " ";
+			alert(expErr);
 		}else{
 			return selectedProperty.expression;
 		}
@@ -49,7 +67,7 @@ function expEditor(thisObj){
 		if(app.project.activeItem !== null){
 			var selectedProperty = getSelectedProperty();
 		}else{
-			alert("Please select a Layer Property first");
+			alert(layerErr);
 		}
 
 		selectedProperty.expression = expression;
@@ -80,7 +98,7 @@ function expEditor(thisObj){
 				runBtn: Button { text:'Apply', preferredSize:[50,20]} \
 			}, \
 			gr_Editor: Group { orientation:'column', \
-				infoField : StaticText {text:'', alignment:['left','top'], characters: 30}, \
+				infoField : StaticText {text:'current Property: ', alignment:['left','top'], characters: 30}, \
 				editField : EditText {text:' ', properties: {multiline:true}, enterKeySignalsOnChange:true, preferredSize:[300,500], scrollable:true, alignChildren:['top','left']} \
 			} \
 		}";
@@ -95,20 +113,22 @@ function expEditor(thisObj){
 
 		//CALLBACKS
 		pal.grp.gr_Actions.runBtn.onClick = function(){
-			pal.grp.gr_Editor.infoField.text = getSelectedProperty().name;
+			pal.grp.gr_Editor.infoField.text = "Current Property: " + getSelectedPropertyName();
 			bakeExpression(pal.grp.gr_Editor.editField.text);
 		}
 
 		pal.grp.gr_Actions.getBtn.onClick = function(){
-			pal.grp.gr_Editor.infoField.text = getSelectedProperty().name;
+			pal.grp.gr_Editor.infoField.text = "Current Property: " + getSelectedPropertyName();
 			pal.grp.gr_Editor.editField.text = getExpression();
+			pal.grp.gr_Actions.getBtn.value = false;
+			$. writeln(app.project);
 		}
 
 		pal.grp.gr_Actions.clearBtn.onClick = function(){
 			var selectedProperty = getSelectedProperty();
 			app.beginUndoGroup("Clear Expression");
 			selectedProperty.expression = "";
-			pal.grp.gr_Editor.infoField.text = getSelectedProperty().name;
+			pal.grp.gr_Editor.infoField.text = "Current Property: " + getSelectedPropertyName();
 			pal.grp.gr_Editor.editField.text = "";
 			app.endUndoGroup();
 		}
