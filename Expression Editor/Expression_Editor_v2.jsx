@@ -1,7 +1,9 @@
 
 function expEditor(thisObj){
 
+
 	 this.project = app.project;
+
 
 	 this.compErr = "Please select a Composition first";
 	 this.layerErr = "Please select a Layer Property first";
@@ -13,7 +15,7 @@ function expEditor(thisObj){
 	 };
 
 
-	 function getSelectedProperty(){
+	 this.getSelectedProperty = function(){
 	 	var selectedComp = project.activeItem;
 
 	 	if(this.checkActiveItem(selectedComp)){
@@ -34,7 +36,7 @@ function expEditor(thisObj){
 	 };
 
 	 function getSelectedPropertyName(){
-	 	var selectedComp = project.activeItem;
+	 	var selectedComp = app.project.activeItem;
 
 	 	if(this.checkActiveItem(selectedComp)){
 
@@ -51,7 +53,7 @@ function expEditor(thisObj){
 	 };
 
 
-	 function getExpression(){
+	 this.getExpression = function(){
 	 	var selectedProperty = getSelectedProperty();
 
 		if(selectedProperty==null || selectedProperty.expressionEnabled == false){
@@ -63,7 +65,7 @@ function expEditor(thisObj){
 	};
 
 
-	function bakeExpression(expression){
+	this.bakeExpression = function(expression){
 		if(app.project.activeItem !== null){
 			var selectedProperty = getSelectedProperty();
 		}else{
