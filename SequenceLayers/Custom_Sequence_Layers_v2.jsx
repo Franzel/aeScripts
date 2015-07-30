@@ -34,9 +34,9 @@
 
 			var myComp = project.activeItem;
 
-			if((myComp == null) || !(myComp instanceof CompItem)){
+			if((myComp == null) || !(myComp instanceof CompItem) || myComp.selectedLayers.length==0){
 				myComp = null;
-				alert("Please select a Composition first");
+				alert("Please select Layers first");
 			}else{
 
 				app.beginUndoGroup("Sequence Layers");
@@ -77,9 +77,9 @@
 
 			var myComp = project.activeItem;
 
-			if((myComp == null) || !(myComp instanceof CompItem)){
+			if((myComp == null) || !(myComp instanceof CompItem) || myComp.selectedLayers.length==0){
 				myComp = null;
-				alert("Please select a Composition first");
+				alert("Please select Layers first");
 			}else{
 
 				app.beginUndoGroup("Extend to End of Comp");
@@ -99,9 +99,9 @@
 
 			var myComp = project.activeItem;
 
-			if((myComp == null) || !(myComp instanceof CompItem)){
+			if((myComp == null) || !(myComp instanceof CompItem) || myComp.selectedLayers.length==0){
 				myComp = null;
-				alert("Please select a Composition first");
+				alert("Please select Layers first");
 			}else{
 
 				app.beginUndoGroup("Reset Layers");
@@ -137,7 +137,7 @@
 	            },\
 	           	timeControlPanel: Panel{orientation:'column', text:'Time Controls', alignment:['fill','center'], alignChildren:['right','top'],\
 					myTimeSpanGroup: Group{orientation: 'row', alignChildren:['right','center'],\
-						myTimeSpanTextTitle: StaticText{text:'TimeSpan (sec)'},\
+						myTimeSpanTextTitle: StaticText{text:'Time Span(sec)'},\
 						myEditText1: EditText{text: '5.0',preferredSize:[40,20], alignment:['center','right']},\
 					},\
 					myRandomGroup: Group{orientation: 'row', alignChildren:['right','center'],\
