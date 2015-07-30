@@ -37,6 +37,15 @@ function expEditor()
 			bakeExpression(pal.grp.gr_Editor.editField.text);
 		};
 
+		pal.grp.gr_Actions.clearBtn.onClick = function(){
+			var selectedProperty = getSelectedProperty(pal);
+			app.beginUndoGroup("Clear Expression");
+			selectedProperty.expression = "";
+			pal.grp.gr_Editor.infoField.text = "Current Property: " + getSelectedProperty(pal).name;
+			pal.grp.gr_Editor.editField.text = "";
+			app.endUndoGroup();
+		}
+
 		// show UI
 		if (pal instanceof Window){
 			pal.center();
@@ -66,10 +75,10 @@ function expEditor()
 	 			}
 	 			
 			}else{
-				$.writeln("no Property selected");
+				$.writeln("Select a Property first");
 			}
 		}else{
-			$.writeln("no Comp selected");
+			$.writeln("No Composition is selected");
 		}
 	};
 
