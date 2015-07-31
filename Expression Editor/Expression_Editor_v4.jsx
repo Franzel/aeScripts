@@ -1,17 +1,24 @@
+/*
+This script provides an window to copy, edit and apply expressions to the selected Property
+Francisco Zamorano
+July 2015
+*/
 
 function expEditor()
 {
 	var expEditor = this;
+	//info
+	this.scriptTitle = "Expression Editor";
 
 	//messages
 	this.errNoValidProp = "This is not a valid property";
 	this.errNoSelectedProp = "Select a Property first";
-	this.errNoSelectedComp = "No Composition is selected"
+	this.errNoSelectedComp = "No Composition is selected";
+	this.errMultipleSelectedProp = "Please select only one property";
 
-	this.buildUI = function (thisObj)
-	{
-		// dockable panel or palette
-		var pal = (thisObj instanceof Panel) ? thisObj : new Window("palette", this.scriptTitle, undefined, {resizeable:false});
+	this.buildUI = function (thisObj){
+
+		var pal = (thisObj instanceof Panel) ? thisObj : new Window("palette", "Expression Editor", undefined, {resizeable:true});
 
 		//resource specs
 		var res = 
@@ -58,45 +65,27 @@ function expEditor()
 	};
 
 	this.getSelectedProperty = function (){
-		// $.writeln(app.project.activeItem.selectedLayers[0].selectedProperties[0].name)
-
 	 	if(app.project && app.project.activeItem && app.project.activeItem instanceof CompItem){
-
 	 		if(app.project.activeItem.selectedProperties.length>0){
 	 			if(app.project.activeItem.selectedLayers[0].selectedProperties[0] instanceof Property){
-	 				$.writeln("nProps:  " + app.project.activeItem.selectedProperties.length);
-	 				// $.writeln("PropertyType:  " + app.project.activeItem.selectedLayers[0].selectedProperties[0]);
-	 				$.writeln("PropertyName:  " + app.project.activeItem.selectedLayers[0].selectedProperties[0].name);
-	 				$.writeln("PropertyExp:  " + app.project.activeItem.selectedLayers[0].selectedProperties[0].expression);
 	 				return app.project.activeItem.selectedLayers[0].selectedProperties[0];
 	 			}
 	 			else if(app.project.activeItem.selectedLayers[0].selectedProperties[0] instanceof PropertyGroup){
-	 				// $.writeln( "PGROUP SELECTED");
-	 				// // $.writeln("Property:  " + app.project.activeItem.selectedLayers[0].propertyGroup.name);
-	 				// $.writeln("PropertyName:  " + app.project.activeItem.selectedLayers[0].selectedProperties[0].name);
-	 				// $.writeln("numProps: " + app.project.activeItem.selectedLayers[0].selectedProperties[0].numProperties);
-	 				// $.writeln("isSelected: " + app.project.activeItem.selectedLayers[0].selectedProperties[0].property(1).selected);
-	 				// var selProp = app.project.activeItem.selectedLayers[0].selectedProperties[0].property(1).name; // THIS IS CRASHING AE !!!!!!!
-
 	 				var parentProp = app.project.activeItem.selectedLayers[0].selectedProperties[0];
 	 				var nProps = parentProp.numProperties;
 	 				var targetProp;
 
 	 				for (var i=1; i < nProps+1; i++){
 	 					if(parentProp.property(i).selected){
-	 						// $.writeln ("GOTCHA!   " + parentProp.property(i).name);
 	 						targetProp = parentProp.property(i);
 	 					}
 	 				}
-
 	 				return targetProp;
 	 			}
 			}else{
-				// $.writeln("Select a Property first");
 				alert(this.errNoSelectedProp);
 			}
 		}else{
-			// $.writeln("No Composition is selected");
 			alert(this.errNoSelectedComp);
 		}
 	};
@@ -112,8 +101,6 @@ function expEditor()
 	this.run = function (thisObj){
 		this.buildUI(thisObj);
 	};
+}//end main
 
-}
-
-// Creates an instance of the main class and run it
 new expEditor().run(this);
