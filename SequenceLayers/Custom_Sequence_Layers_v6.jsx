@@ -107,10 +107,6 @@ function sequenceLayers()
 			app.endUndoGroup();
 		}
 
-
-
-
-
 		// show UI
 		if (pal instanceof Window){
 			pal.center();
@@ -122,6 +118,7 @@ function sequenceLayers()
 
 	runSequenceLayers = function (){
         var myComp = app.project.activeItem;
+        $.writeln("good");
 
     	if(app.project && app.project.activeItem && app.project.activeItem instanceof CompItem){			
 			
