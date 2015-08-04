@@ -1,5 +1,6 @@
 ﻿/*
-This script provides an window to copy, edit and apply expressions to the selected Property
+This script provides advanced controls for sequencing layers
+
 Francisco Zamorano
 July 2015
 */
