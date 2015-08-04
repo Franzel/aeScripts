@@ -21,8 +21,8 @@ function sequenceLayers()
 
 		//resource specs
 		var res = 
-		"group { orientation:'column', alignment:['left', 'top'], alignChildren:['center', 'top'], \
-			gr_Actions: Panel { orientation:'row', alignChildren:['left', 'top'],\
+		"group { orientation:'column', alignment:['fill', 'top'], alignChildren:['fill', 'top'], \
+			gr_Actions: Panel { orientation:'row', alignChildren:['fill', 'top'],\
 				runBtn: Button { text:'Run', preferredSize:[50,20]}, \
 				resetBtn: Button { text:'Reset', preferredSize:[50,20]} \
 			},\
@@ -56,6 +56,7 @@ function sequenceLayers()
       	pal.grp.gr_Actions.resetBtn.helpTip = "Resets inPoints of Layers to time=0";
       	pal.grp.gr_TimeControl.gr_TimeSpanGroup.timeSpanEditText.helpTip = "Sets time between first and last layer, in seconds";
       	pal.grp.gr_TimeControl.gr_RandomGroup.randomEditText.helpTip = "Sets the maximum time random offset, in seconds";
+      	pal.grp.gr_TimeControl.gr_StartTimeGroup.startTimeTextCheckBox.helpTip = "Forces the sequence to start from time=0";
       	pal.grp.gr_StackOrder.ascRadioBtn.helpTip = "Layers will be sequenced in ascending order";
       	pal.grp.gr_StackOrder.descRadioBtn.helpTip = "Layers will be sequenced in descending order";
       	pal.grp.gr_Extend.extendBtn.helpTip = "Extends outPoints of layers to the end of the Composition";
