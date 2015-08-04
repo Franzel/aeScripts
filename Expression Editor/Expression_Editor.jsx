@@ -1,5 +1,7 @@
 /*
-This script provides an window to copy, edit and apply expressions to the selected Property
+This script provides a window with a text edit field to copy,
+edit and apply expressions to a selected Property.
+
 Francisco Zamorano
 July 2015
 */
