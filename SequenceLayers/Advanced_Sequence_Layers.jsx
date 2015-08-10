@@ -140,12 +140,9 @@ function sequenceLayers()
 
 
 			for(var i = 0; i<nLayers+1; i++){
-			    // var thisLayer = selLayers[i];
-			     // $.writeln(selLayers[i].index);
+
 				var t = 0;
 			    var randomAmt = getRandom(0,randomMax); 
-				// $.writeln("rM:" + randomMax + "  tS:" + timeSpan + "  asc:" + ascending + "  bZ:" + bStartFromZero + "  rA:" + randomAmt);
-
 
 			    if(bStartFromZero){
 			    	t = 0;
@@ -164,7 +161,7 @@ function sequenceLayers()
 			    }
 			}
 		}else{
-			$.writeln("Please select some Layers First");
+			alert("Please select some Layers First");
 		}
 	};
 
@@ -214,7 +211,6 @@ function sequenceLayers()
 	compareLayers = function(a, b) {
 		return a.index > b.index;
 	}
-
 
 	this.run = function (thisObj){
 		this.buildUI(thisObj);
