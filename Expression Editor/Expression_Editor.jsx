@@ -9,8 +9,6 @@ July 2015
 function expEditor()
 {
 	var expEditor = this;
-	//info
-	this.scriptTitle = "Expression Editor";
 
 	//messages
 	this.errNoValidProp = "This is not a valid property";
