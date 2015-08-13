@@ -11,15 +11,15 @@ ASL provides an intuitive interface that is easy to understand, and if you are i
 
 #### ASL Features:
 - Sequence as many layers as you want
-- Define a custom time span between the first and last layers, and the script will re-order then evenly.
+- Define a custom time span between the first and last layers, and the script will re-order then evenly
 - You can decide if you want our sequence to start from the current playhead time or from the beginning of the composition. 
-- Decide if you want to stack the layers in descending or ascending order.
-- Set an amount of random if you feel that even spacing too rigid and want a more organic result.
+- Decide if you want to stack the layers in descending or ascending order
+- Set an amount of random if you feel that even spacing too rigid and want a more organic result
 - Extend the Out-Points of the selected layers to the end of the composition
-- Reset all the layers to the beginning of your comp
+- Reset all the layers to the beginning of your Comp
 
 #### Compatibility:
-ASL has been tested on AE CC 2014 and 2015 in Mac OSX
+ASL has been tested on AE CC 2014 and 2015 in Mac OSX.
 No guarantee that it will run smoothly on Windows or in a different AE version. 
 Compatibility list will be added as the script is tested on different versions. 
 
