@@ -134,10 +134,11 @@ function expEditor()
 
 	this.bakeMultiple = function(_expression){
 		var selLayers = app.project.activeItem.selectedLayers
+		var masterProp = expEditor.getSelectedProperty().name.toString();
 		
 		for(var i=0;i<selLayers.length;i++){
 			//$.writeln(selLayers[i].masterPropname);
-			var masterProp = expEditor.getSelectedProperty().name.toString();
+			
 			$.writeln(masterProp);
 			selLayers[i].property(masterProp).expression = _expression;
 		}
