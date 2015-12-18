@@ -11,6 +11,7 @@ ASL provides an intuitive interface that is easy to understand, and if you are i
 
 #### ASL Features:
 - Sequence as many layers as you want
+- Option to work in frames or seconds
 - Define a custom time span between the first and last layers, and the script will re-order then evenly
 - You can decide if you want our sequence to start from the current playhead time or from the beginning of the composition. 
 - Decide if you want to stack the layers in descending or ascending order
