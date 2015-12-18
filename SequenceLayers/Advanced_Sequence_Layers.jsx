@@ -156,22 +156,26 @@ function sequenceLayers()
 			var selLayers = myComp.selectedLayers.slice(0);
 			var nLayers = selLayers.length;
 
+			//copy the input text variables into new variables so they remain untouched after the conversion operations below
+			var totalSpan = timeSpan;
+			var totalRandom = randomMax;
+
 			selLayers.sort( compareLayers );
 
-			//check for frames vs seconds
+			//checking and conversion seconds-frames
 			if(bUseFrames){
-				timeSpan *= myComp.frameDuration;
-				randomAmt *= myComp.frameDuration;
+				totalSpan *= myComp.frameDuration;
+				totalRandom *= myComp.frameDuration;
 		    }else{
-		    	timeSpan *= 1.0;
-		    	randomAmt *= 1.0;
+		    	totalSpan *= 1.0;
+		    	totalRandom *= 1.0;
 		    }
 
-		    //main for loop
+		    //MAIN FOR LOOP
 			for(var i = 0; i<nLayers+1; i++){
 
 				var t = 0;
-			    var randomAmt = getRandom(0,randomMax); 
+			    var randomAmt = getRandom(0,totalRandom); 
 
 			    if(bStartFromZero){
 			    	t = 0;
@@ -179,13 +183,14 @@ function sequenceLayers()
 			    	t = parseFloat(myComp.time);
 			    }
 
-			    timeSpan = parseFloat(timeSpan); // just for extra security since sometimes it assumes it's a string. Kind of a hack but helps
+			    totalSpan = parseFloat(totalSpan); // just for extra security since sometimes it assumes it's a string. Kind of a hack but helps
+			    randomAmt = parseFloat(randomAmt);
 
 				if(!myComp.selectedLayers[i].locked){						
 			        if(ascending){
-			            selLayers[i].startTime = t + timeSpan - (timeSpan/(nLayers-1))*(i) +randomAmt; //interval is equally distributed depending on the nLayers and timeSpan            
+			            selLayers[i].startTime = t + totalSpan - (totalSpan/(nLayers-1))*(i) +randomAmt; //interval is equally distributed depending on the nLayers and timeSpan            
 			        }else{
-			            selLayers[i].startTime = t + (timeSpan/(nLayers-1))*(i) +randomAmt; //interval is equally distributed depending on the nLayers and timeSpan
+			            selLayers[i].startTime = t + (totalSpan/(nLayers-1))*(i) +randomAmt; //interval is equally distributed depending on the nLayers and timeSpan
 			        }
 			    }
 			}
