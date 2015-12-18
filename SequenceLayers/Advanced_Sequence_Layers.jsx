@@ -8,6 +8,7 @@ July 2015
 function sequenceLayers()
 {
 	var ascending = true;
+	var bUseFrames = true;
 	var timeSpan = 2.0;  //time from beginning to end to sequence
 	var randomMax = 0.0; //set to Zero if no random is desired
 	var bStartFromZero = false;
@@ -31,13 +32,17 @@ function sequenceLayers()
 				ascRadioBtn: RadioButton{text:'Ascending', value:true},\
 				descRadioBtn: RadioButton{text:'Descending', value:false},\
             },\
+            gr_timeUnits: Panel{orientation:'row', text:'TIme Units', alignment:['fill','fill'], alignChildren:['fill','center'],\
+				framesRadioBtn: RadioButton{text:'Frames', value:true},\
+				secRadioBtn: RadioButton{text:'Seconds', value:false},\
+            },\
         	gr_TimeControl: Panel{orientation:'column', text:'Time Controls', alignment:['fill','center'], alignChildren:['right','top'],\
 				gr_TimeSpanGroup: Group{orientation: 'row', alignChildren:['right','center'],\
-					myTimeSpanTextTitle: StaticText{text:'TimeSpan (sec)'},\
+					myTimeSpanTextTitle: StaticText{text:'TimeSpan'},\
 					timeSpanEditText: EditText{text: '2.0',preferredSize:[40,20], alignment:['center','right']},\
 				},\
 				gr_RandomGroup: Group{orientation: 'row', alignChildren:['right','center'],\
-					myRandomTextTitle: StaticText{text:'Random Amount (sec)'},\
+					myRandomTextTitle: StaticText{text:'Random Amount'},\
 					randomEditText: EditText{text:'0.0',preferredSize:[40,20]},\
 				},\
 				gr_StartTimeGroup: Group{orientation: 'row', alignChildren: ['right','center'], \
@@ -92,6 +97,22 @@ function sequenceLayers()
 			}
 		}
 
+		pal.grp.gr_timeUnits.framesRadioBtn.onClick = function(){
+			if (!(this.value)){
+				bUseFrames = false;
+			}else{
+				bUseFrames = true;
+			}
+		}
+
+		pal.grp.gr_timeUnits.secRadioBtn.onClick = function(){
+			if (!(this.value)){
+				bUseFrames = true;
+			}else{
+				bUseFrames = false;
+			}
+		}
+
 		// Set time span
 		pal.grp.gr_TimeControl.gr_TimeSpanGroup.timeSpanEditText.onChange = function(){
 			timeSpan = parseFloat(this.text);
@@ -130,7 +151,6 @@ function sequenceLayers()
 	runSequenceLayers = function (){
         var myComp = app.project.activeItem;
 
-
     	if(app.project && app.project.activeItem && app.project.activeItem instanceof CompItem){			
 			
 			var selLayers = myComp.selectedLayers.slice(0);
@@ -138,7 +158,16 @@ function sequenceLayers()
 
 			selLayers.sort( compareLayers );
 
+			//check for frames vs seconds
+			if(bUseFrames){
+				timeSpan *= myComp.frameDuration;
+				randomAmt *= myComp.frameDuration;
+		    }else{
+		    	timeSpan *= 1.0;
+		    	randomAmt *= 1.0;
+		    }
 
+		    //main for loop
 			for(var i = 0; i<nLayers+1; i++){
 
 				var t = 0;
